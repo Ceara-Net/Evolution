@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
             articles: [
                 { id: "SVA01", title: "Sobre o SVA", icon: "Question_Mark", path: "../wiki/SVA - PlayHub/sva-about.md" },
                 { id: "SVA02", title: "SVAs PlayHub", icon: "Shopping_Cart", path: "../wiki/SVA - PlayHub/playhub-portifolio.md" },
-                { id: "SVA03", title: "Como Adicionar no SGP", icon: "add_2", path: "../wiki/SVA - PlayHub/sva-sgp.md" }
             ]
         },
     ];
