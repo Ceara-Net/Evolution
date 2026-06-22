@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   --- COMPONENTE VISUAL: BACKGROUND DE AMBIENTAÇÃO DA PÁGINA DE ERRO ---
+   ========================================================================== */
+.blob-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fluid-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.12; /* Mais contido e discreto para focar no erro */
+    mix-blend-mode: screen;
+    transition: opacity 0.5s ease;
+}
+
+.light-theme .fluid-blob {
+    opacity: 0.04;
+    mix-blend-mode: multiply;
+}
+
+/* Duas esferas em posições opostas para envelopar o erro */
+.error-blob-1 {
+    width: 550px;
+    height: 550px;
+    background: var(--clr-orange-main);
+    top: -10%;
+    right: 10%;
+}
+
+.error-blob-2 {
+    width: 600px;
+    height: 600px;
+    background: var(--clr-blue-electric);
+    bottom: -15%;
+    left: 5%;
+}
+
+/* ==========================================================================
+   --- ARQUITETURA DE LAYOUT CENTRALIZADO ---
+   ========================================================================== */
+.error-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.error-container {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-alpha);
+    border-radius: 32px;
+    max-width: 500px;
+    width: 100%;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: 0 30px 60px var(--shadow-base);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Código do Erro (Gigante e Impactante) */
+#error-code {
+    font-size: 110px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -4px;
+    background: linear-gradient(135deg, var(--clr-orange-main) 0%, var(--clr-orange-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 12px rgba(255, 86, 20, 0.15));
+}
+
+.error-divider {
+    width: 60px;
+    height: 4px;
+    background-color: var(--border-alpha);
+    border-radius: 2px;
+    margin: 24px 0;
+}
+
+/* Descrição do problema */
+#error-desc {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    font-weight: 400;
+}
+
+/* --- BOTÃO DE RETORNO DO ECOSSISTEMA --- */
+.btn-return {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-alpha);
+    color: var(--text-main);
+    padding: 14px 28px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    width: 100%;
+}
+
+.btn-return .material-symbols-rounded {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover reativo puxando a cor mestre laranja */
+.btn-return:hover {
+    background: var(--clr-orange-main);
+    border-color: var(--clr-orange-main);
+    color: #ffffff;
+    box-shadow: 0 12px 24px -6px rgba(255, 86, 20, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-return:hover .material-symbols-rounded {
+    transform: scale(1.1);
+}
+
+.btn-return:active {
+    transform: translateY(0) scale(0.98);
+}
