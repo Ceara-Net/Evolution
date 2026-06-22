@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             category: "SVA",
             articles: [
-                { id: "SVA01", title: "Sobre o SVA", icon: "Question_Mark", path: "../wiki/SVA - PlayHub/sva-about.md" },
-                { id: "SVA02", title: "SVAs PlayHub", icon: "Shopping_Cart", path: "../wiki/SVA - PlayHub/playhub-portifolio.md" },
+                { id: "sva-01", title: "Sobre o SVA", icon: "Question_Mark", path: "../wiki/sva-playhub/sva-about.md" },
+                { id: "sva-02", title: "PlayHub - Portfólio", icon: "Shopping_Cart", path: "../wiki/sva-playhub/playhub-portfolio.md" },
             ]
         },
     ];
