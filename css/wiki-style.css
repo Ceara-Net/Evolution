@@ -1,0 +1,539 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   --- ARQUITETURA DE LAYOUT EM 3 COLUNAS FIXAS ---
+   ========================================================================== */
+.wiki-wrapper {
+    display: grid;
+    grid-template-columns: 320px 1fr 280px; /* Alinhamento simétrico original */
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-color-1);
+    transition: grid-template-columns 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Quando ambos os menus colapsam: Esquerda encolhe para 76px, Direita some (0px) */
+.wiki-wrapper.sidebar-collapsed.toc-collapsed {
+    grid-template-columns: 76px 1fr 0px;
+}
+
+body {
+    overflow: hidden !important;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   --- COLUNA 1: SIDEBAR (ESQUERDA) ---
+   ========================================================================== */
+.wiki-sidebar {
+    height: calc(100vh - 32px);
+    margin: 16px;
+    background: rgba(15, 15, 15, 0.75);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--stroke-color);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-header-controls {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--stroke-color);
+    transition: padding 0.3s ease;
+}
+
+.header-left-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-brand-text h2 {
+    font-family: var(--font-secondary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--font-color-1);
+    margin: 0;
+}
+
+.btn-sidebar-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--button-color, rgba(255, 255, 255, 0.04));
+    border: 1px solid var(--stroke-color);
+    color: var(--font-color-1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-sidebar-action:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+}
+
+/* Controlos dinâmicos dos ícones do botão Menu Open/Close */
+.wiki-sidebar .id-icon-collapse { display: block; }
+.wiki-sidebar .id-icon-expand { display: none; }
+
+.wiki-sidebar.collapsed .id-icon-collapse { display: none; }
+.wiki-sidebar.collapsed .id-icon-expand { display: block; }
+
+/* --- NAVEGAÇÃO INTERNA --- */
+.sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 12px;
+}
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-category-block {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--stroke-color);
+    background: rgba(255, 255, 255, 0.02);
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+.category-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 12px;
+    cursor: pointer;
+    user-select: none;
+}
+.category-toggle:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.category-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.category-icon {
+    color: var(--accent-color);
+    font-size: 20px;
+}
+.category-title {
+    font-family: var(--font-secondary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--font-color-1);
+    letter-spacing: 0.5px;
+}
+.arrow-icon {
+    font-size: 18px;
+    color: var(--font-color-2);
+    transition: transform 0.3s ease;
+}
+
+.menu-category-block.open {
+    background: rgba(255, 255, 255, 0.04);
+}
+.menu-category-block.open .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.category-sublist {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+    padding-left: 0;
+}
+.menu-category-block.open .category-sublist {
+    max-height: 400px;
+    opacity: 1;
+    border-top: 1px solid var(--stroke-color);
+    padding: 6px 0;
+}
+
+.wiki-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    color: var(--font-color-2);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.wiki-menu-item:hover {
+    color: var(--font-color-1);
+    background: rgba(255, 255, 255, 0.03);
+}
+.wiki-menu-item.active {
+    color: #fff;
+    font-weight: 600;
+    background: linear-gradient(90deg, rgba(255, 86, 20, 0.15) 0%, transparent 100%);
+    border-left: 3px solid var(--accent-color);
+}
+
+/* ==========================================================================
+   --- ESTADOS QUANDO A SIDEBAR ESTIVER EM MODO COMPACTO (.collapsed) ---
+   ========================================================================== */
+.wiki-sidebar.collapsed {
+    margin: 10px 10px 10px 10px;
+}
+.wiki-sidebar.collapsed .sidebar-header-controls {
+    padding: 20px 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+.wiki-sidebar.collapsed .sidebar-brand-text,
+.wiki-sidebar.collapsed .category-title,
+.wiki-sidebar.collapsed .arrow-icon,
+.wiki-sidebar.collapsed .item-text {
+    display: none !important;
+}
+.wiki-sidebar.collapsed .category-toggle {
+    justify-content: center;
+    padding: 14px 0;
+}
+.wiki-sidebar.collapsed .category-title-wrapper {
+    justify-content: center;
+    width: 100%;
+}
+.wiki-sidebar.collapsed .category-icon {
+    font-size: 22px;
+}
+.wiki-sidebar.collapsed .category-sublist {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    padding: 0 !important;
+}
+
+/* ==========================================================================
+   --- COLUNA 2: ÁREA CENTRAL DO LEITOR DO MARKDOWN (.markdown-body) ---
+   ========================================================================== */
+.wiki-reader-area {
+    height: 100%;
+    overflow-y: auto;
+    background: var(--bg-color-2);
+    padding: 60px 40px 120px 40px;
+    display: flex;
+    justify-content: center;
+    transition: padding 0.35s ease;
+}
+.wiki-reader-area::-webkit-scrollbar { width: 6px; }
+.wiki-reader-area::-webkit-scrollbar-thumb { background: var(--stroke-color); border-radius: 10px; }
+
+/* Expande as margens de leitura quando as duas barras recolhem */
+.wiki-wrapper.sidebar-collapsed.toc-collapsed .wiki-reader-area {
+    padding: 60px 10% 120px 10%;
+}
+
+.markdown-body {
+    max-width: 760px;
+    width: 100%;
+    color: var(--font-color-2);
+}
+
+/* --- Títulos (Hierarquia Completa) --- */
+.markdown-body h1 {
+    font-family: var(--font-secondary);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--font-color-1);
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--stroke-color);
+    padding-bottom: 16px;
+}
+.markdown-body h2 {
+    font-family: var(--font-secondary);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--font-color-1);
+    margin-top: 40px;
+    margin-bottom: 16px;
+    scroll-margin-top: 20px;
+}
+.markdown-body h3, 
+.markdown-body h4, 
+.markdown-body h5, 
+.markdown-body h6 {
+    font-family: var(--font-secondary);
+    color: var(--font-color-1);
+    margin-top: 32px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    scroll-margin-top: 20px;
+}
+.markdown-body h3 { font-size: 1.35rem; }
+.markdown-body h4 { font-size: 1.15rem; }
+.markdown-body h5 { font-size: 1.00rem; }
+.markdown-body h6 { font-size: 0.88rem; color: var(--font-color-2); }
+
+/* --- Formatação Base de Texto --- */
+.markdown-body p {
+    font-size: 1.02rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.markdown-body strong {
+    color: var(--font-color-1);
+    font-weight: 700;
+}
+
+.markdown-body em {
+    color: var(--font-color-2);
+    font-style: italic;
+}
+
+.markdown-body del {
+    color: var(--font-color-2);
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+/* --- Horizontal Rules (Linhas Horizontais) --- */
+.markdown-body hr {
+    height: 1px;
+    padding: 0;
+    margin: 32px 0;
+    background-color: var(--stroke-color);
+    border: 0;
+}
+
+/* --- Listas (Não Ordenadas e Ordenadas) --- */
+.markdown-body ul,
+.markdown-body ol { 
+    margin-left: 20px; 
+    margin-bottom: 20px; 
+    padding-left: 0;
+}
+.markdown-body li { 
+    margin-bottom: 8px; 
+    color: var(--font-color-2);
+}
+.markdown-body ul li {
+    list-style-type: disc;
+}
+.markdown-body ol li {
+    list-style-type: decimal;
+}
+
+/* Sublistas Aninhadas */
+.markdown-body ul ul, 
+.markdown-body ol ol, 
+.markdown-body ul ol, 
+.markdown-body ol ul {
+    margin-top: 6px;
+    margin-bottom: 0;
+    margin-left: 20px;
+}
+
+/* --- Task List / Check List --- */
+.markdown-body li.task-list-item {
+    list-style-type: none;
+    margin-left: -20px; /* Alinha o checkbox ignorando o recuo padrão */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.markdown-body input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--stroke-color);
+    border-radius: 4px;
+    background: var(--text-field-color);
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.markdown-body input[type="checkbox"]:checked {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.markdown-body input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--white-color);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* --- Blockquote (Citações) --- */
+.markdown-body blockquote {
+    margin: 24px 0;
+    padding: 10px 20px;
+    color: var(--font-color-2);
+    background: var(--text-field-color);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 8px 8px 0;
+}
+
+.markdown-body blockquote p {
+    margin-bottom: 0;
+    font-style: italic;
+}
+
+/* --- Destaque para Backticks (Code Inline) --- */
+.markdown-body code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background-color: rgba(255, 86, 20, 0.08); /* Fundo laranja sutil */
+    color: var(--accent-color); /* Texto com a cor de destaque principal */
+    border: 1px solid rgba(255, 86, 20, 0.25); /* Borda demarcada */
+    padding: 3px 6px;
+    border-radius: 6px;
+    word-break: break-word;
+}
+
+/* Se for um bloco completo de código (```) */
+.markdown-body pre code {
+    display: block;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--font-color-2);
+    border: 1px solid var(--stroke-color);
+    overflow-x: auto;
+}
+
+/* --- Tabelas Adaptativas --- */
+.markdown-body table {
+    width: 100%;
+    margin-bottom: 24px;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.markdown-body th, 
+.markdown-body td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--stroke-color);
+    text-align: left;
+    color: var(--font-color-2);
+}
+
+.markdown-body th {
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    color: var(--font-color-1);
+    background: var(--button-color);
+}
+
+.markdown-body tr:hover td {
+    background: var(--text-field-color);
+}
+
+/* --- Links Adaptativos --- */
+.markdown-body a {
+    color: var(--hyperlink-color);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: var(--transition-smooth);
+}
+
+.markdown-body a:hover {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+/* ==========================================================================
+   --- COLUNA 3: LATERAL DIREITA (TOC) ---
+   ========================================================================== */
+.wiki-toc-area {
+    height: calc(100vh - 32px);
+    margin: 16px 16px 16px 16px;
+    background: rgba(15, 15, 15, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--stroke-color);
+    border-radius: 16px;
+    padding: 24px 16px;
+    overflow-y: auto;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.25s ease, visibility 0.25s ease, margin 0.35s ease;
+}
+
+/* Esconde completamente a barra e remove as margens quando colapsado */
+.wiki-wrapper.toc-collapsed .wiki-toc-area {
+    opacity: 0;
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.toc-sticky-container {
+    position: sticky;
+    top: 0;
+}
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: var(--font-color-1);
+}
+.toc-header span { font-size: 18px; color: var(--accent-color); }
+.toc-header h3 { font-family: var(--font-secondary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+
+.toc-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--stroke-color);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.toc-anchor-link {
+    display: block;
+    padding: 6px 12px;
+    color: var(--font-color-2);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    
+    /* MODIFICAÇÕES PARA PERMITIR A QUEBRA DE LINHA: */
+    white-space: normal;       /* Permite a quebra de linha natural */
+    word-break: break-word;    /* Força a quebra se houver uma palavra gigante sem espaços */
+    overflow: visible;         /* Garante que o conteúdo quebrado fique visível */
+    text-overflow: clip;       /* Remove o efeito das reticências (...) */
+}
+.toc-anchor-link:hover { color: var(--font-color-1); background: rgba(255,255,255,0.02); }
+.toc-anchor-link.active { color: var(--accent-color); font-weight: 600; background: rgba(255, 86, 20, 0.05); }
+.toc-empty-state { font-size: 0.8rem; color: var(--font-color-2); font-style: italic; padding-left: 12px; }
+
+.reader-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-top: 25vh; color: var(--font-color-2); }
+@keyframes syncSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

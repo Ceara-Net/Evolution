@@ -1,51 +1,61 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/imgs/favicon.png" type="image/x-icon">
-    <title>Ceará Net Evolution | Wiki Interna</title>
+    <title>Wiki | Evolution Hub</title>
+    <link rel="icon" href="../assets/images/favicon/favicon.png" type="image/x-icon">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
-
-    <link rel="stylesheet" href="../css/mainStyle.css">
     
-    <link rel="stylesheet" href="../css/wikiStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <link rel="stylesheet" href="../css/global-style.css">
+    <link rel="stylesheet" href="../css/wiki-style.css">
 </head>
-<body>
+<body class="dark-theme">
 
     <div class="wiki-wrapper">
         
-        <aside class="wiki-sidebar">
-            <div class="sidebar-header">
-                <a href="../index.html" class="btn-back-home" aria-label="Voltar ao Painel">
-                    <span class="material-symbols-rounded">arrow_back</span>
-                </a>
-                <h2>Módulos Wiki</h2>
+        <aside class="wiki-sidebar" id="wiki-sidebar-element">
+            <div class="sidebar-header-controls">
+                <div class="header-left-group">
+                    <button id="sidebar-back-btn" class="btn-sidebar-action" title="Voltar para a Home">
+                        <span class="material-symbols-rounded">arrow_back</span>
+                    </button>
+                    <div class="sidebar-brand-text">
+                        <h2>Wiki</h2>
+                    </div>
+                </div>
+                <button id="sidebar-toggle-btn" class="btn-sidebar-action" title="Alternar Menu">
+                    <span class="material-symbols-rounded id-icon-expand">menu</span>
+                    <span class="material-symbols-rounded id-icon-collapse">menu_open</span>
+                </button>
             </div>
-            
+    
             <nav class="sidebar-nav">
                 <ul id="wiki-menu-links"></ul>
             </nav>
         </aside>
 
         <main class="wiki-reader-area">
-            <article id="markdown-render-target" class="markdown-body">
-                <div class="reader-placeholder">
-                    <span class="material-symbols-rounded animated-icon">menu_book</span>
-                    <h3>Selecione um tópico na barra lateral</h3>
-                    <p>Escolha um manual ou tutorial para carregar a base de conhecimento oficial Ceará Net.</p>
-                </div>
+            <article class="markdown-body" id="markdown-render-target">
             </article>
         </main>
 
+        <aside class="wiki-toc-area">
+            <div class="toc-sticky-container">
+                <div class="toc-header">
+                    <span class="material-symbols-rounded">toc</span>
+                    <h3>Nesta Página</h3>
+                </div>
+                <ul id="article-toc-links" class="toc-links-list">
+                </ul>
+            </div>
+        </aside>
+
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <script src="../js/wikiScript.js"></script>
+    <script type="module" src="../js/wiki/main.js"></script>
 </body>
 </html>

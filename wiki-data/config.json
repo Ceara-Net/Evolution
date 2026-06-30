@@ -1,0 +1,14 @@
+{
+  "categories": [
+    {
+      "id": "sva-playhub",
+      "title": "SVA — PlayHub",
+      "icon": "video_settings",
+      "articles": [
+        { "id": "playhub-sva", "title": "SVA PlayHub Geral", "path": "../wiki-data/artigos/sva-playhub/sva.md" },
+        { "id": "playhub-portfolio", "title": "Portfólio de Canais", "path": "../wiki-data/artigos/sva-playhub/playhub-portfolio.md" },
+        { "id": "playhub-ativacao", "title": "Ativação de Contas", "path": "../wiki-data/artigos/sva-playhub/playhub-active.md" }
+      ]
+    }
+  ]
+}
